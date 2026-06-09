@@ -1,0 +1,138 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-rose-soft: var(--rose-soft);
+  --color-sage: var(--sage);
+  --color-cream: var(--cream);
+  --color-clay: var(--clay);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Warm earthy palette inspired by the Integrar brand */
+  --background: oklch(0.965 0.014 80);      /* warm cream */
+  --foreground: oklch(0.28 0.045 50);        /* deep warm brown */
+
+  --card: oklch(0.985 0.01 85);
+  --card-foreground: oklch(0.28 0.045 50);
+  --popover: oklch(0.985 0.01 85);
+  --popover-foreground: oklch(0.28 0.045 50);
+
+  --primary: oklch(0.38 0.055 45);           /* rich brown */
+  --primary-foreground: oklch(0.97 0.014 80);
+
+  --secondary: oklch(0.92 0.022 75);         /* soft sand */
+  --secondary-foreground: oklch(0.32 0.05 45);
+
+  --muted: oklch(0.93 0.018 78);
+  --muted-foreground: oklch(0.5 0.035 55);
+
+  --accent: oklch(0.78 0.08 30);             /* clay terracotta */
+  --accent-foreground: oklch(0.99 0.01 80);
+
+  --rose-soft: oklch(0.82 0.06 15);          /* dusty rose */
+  --sage: oklch(0.7 0.045 145);              /* muted sage */
+  --cream: oklch(0.965 0.014 80);
+  --clay: oklch(0.72 0.075 35);
+
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 80);
+
+  --border: oklch(0.88 0.022 70);
+  --input: oklch(0.9 0.02 70);
+  --ring: oklch(0.6 0.06 45);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--color-foreground);
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@utility eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  font-weight: 500;
+}
+
+@utility soft-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: transform 400ms cubic-bezier(.2,.7,.2,1), box-shadow 400ms ease, border-color 400ms ease;
+}
+@utility soft-card-hover {
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px -30px color-mix(in oklab, var(--color-foreground) 35%, transparent);
+    border-color: color-mix(in oklab, var(--color-foreground) 20%, var(--color-border));
+  }
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 900ms ease, transform 900ms cubic-bezier(.2,.7,.2,1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
