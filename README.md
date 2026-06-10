@@ -12,12 +12,12 @@ O Integrar nasceu da proposta de oferecer um espaço seguro para jovens adultos 
 
 A plataforma foi criada para:
 
-- Apresentar o grupo terapêutico;
-- Explicar sua metodologia;
-- Demonstrar sua proposta de valor;
-- Apresentar os facilitadores;
-- Responder dúvidas frequentes;
-- Captar interessados para futuras turmas.
+* Apresentar o grupo terapêutico;
+* Explicar sua metodologia;
+* Demonstrar sua proposta de valor;
+* Apresentar os facilitadores;
+* Responder dúvidas frequentes;
+* Captar interessados para futuras turmas.
 
 ---
 
@@ -27,23 +27,42 @@ A plataforma foi criada para:
 
 ### Concluído
 
-- Landing Page institucional
-- Design responsivo
-- Navegação entre seções
-- FAQ
-- Modal/Formulário de interesse
-- Apresentação dos facilitadores
-- Seção explicativa sobre DBT
-- Otimizações de UX e responsividade
-- Estrutura inicial para evolução do backend
+#### Frontend
+
+* Landing Page institucional
+* Design responsivo
+* Navegação entre seções
+* FAQ
+* Modal/Formulário de interesse
+* Apresentação dos facilitadores
+* Seção explicativa sobre DBT
+* Otimizações de UX e responsividade
+
+#### Backend
+
+* Estrutura inicial da API em Go
+* Configuração do Fiber
+* Integração com PostgreSQL (Neon)
+* Configuração do GORM
+* Endpoint de Health Check (`/health`)
+* AutoMigrate inicial da entidade Lead
+* Gerenciamento de configuração via `.env`
+
+#### Infraestrutura
+
+* Banco de dados PostgreSQL gerenciado (Neon)
+* Estrutura preparada para deploy em nuvem
+* Organização do projeto em monorepo
+* Configuração centralizada de variáveis de ambiente
 
 ### Em desenvolvimento
 
-- API em Golang
-- Persistência em banco de dados PostgreSQL
-- Integração com Google Sheets
-- Notificações por e-mail
-- Deploy em nuvem
+* Endpoint de cadastro de interessados
+* Validação de dados
+* Persistência de leads
+* Integração com Google Sheets
+* Notificações por e-mail
+* Deploy em produção
 
 ---
 
@@ -51,40 +70,62 @@ A plataforma foi criada para:
 
 ### Frontend
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- TanStack Router
-- Framer Motion
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* TanStack Router
+* Framer Motion
 
-### Backend (Planejado)
+### Backend
 
-- Golang
-- Fiber
-- Gorm
-- PostgreSQL
+* Golang
+* Fiber
+* GORM
+* PostgreSQL
 
-### Infraestrutura (Planejada)
+### Infraestrutura
 
-- Cloud Pública
-- HTTPS
-- Deploy Automatizado
-- Banco de Dados Gerenciado
+* Neon (PostgreSQL Gerenciado)
+* Cloudflare Pages
+* Render (Planejado)
+* HTTPS
+* Variáveis de Ambiente (.env)
 
 ---
 
-## Estrutura Atual
+## Estrutura do Projeto
 
 ```text
 integrar/
+├── .gitignore
+├── README.md
+├── api/
+│   ├── cmd/
+│   │   └── api/
+│   │       └── main.go
+│   ├── internal/
+│   │   ├── app/
+│   │   ├── config/
+│   │   ├── database/
+│   │   └── leads/
+│   ├── go.mod
+│   └── go.sum
 ├── web/
-├── docs/
-│   ├── briefing/
-│   ├── identidade-visual/
-│   └── README.md
-└── README.md
+└── docs/
 ```
+
+### api/
+
+Responsável pela API REST desenvolvida em Go.
+
+Atualmente contém:
+
+* Inicialização da aplicação
+* Configuração de ambiente
+* Conexão com banco PostgreSQL
+* Configuração do Fiber
+* Estrutura inicial do domínio de Leads
 
 ### web/
 
@@ -96,60 +137,74 @@ Documentação utilizada durante a fase de descoberta, planejamento, arquitetura
 
 ---
 
-## Documentação
+## Arquitetura Atual
 
-A pasta `docs` contém materiais produzidos durante a fase de concepção do projeto.
+### Frontend
 
-### Briefing
+* React + TypeScript
+* Cloudflare Pages (Planejado)
 
-Documentos relacionados ao planejamento do produto:
+### Backend
 
-- Visão do Projeto
-- Arquitetura da Home Page
-- Estrutura de Conteúdo
-- Definição de Objetivos
-- Público-Alvo
-- Jornada do Usuário
+* API REST em Go
+* Framework Fiber
+* GORM para acesso ao banco
 
-### Identidade Visual
+### Banco de Dados
 
-Materiais utilizados para orientar:
+* PostgreSQL gerenciado via Neon
 
-- Direção de arte
-- Tom de comunicação
-- Linguagem visual
-- Referências estéticas
-- Posicionamento da marca
+### Fluxo Atual
 
----
-
-## Processo de Desenvolvimento
-
-O desenvolvimento do projeto teve início a partir do levantamento de requisitos, análise dos materiais fornecidos pelos facilitadores, estudo da proposta terapêutica do grupo e definição da identidade visual da marca Integrar.
-
-Antes da implementação, foram produzidos documentos de planejamento, arquitetura de conteúdo, posicionamento, público-alvo e experiência do usuário.
-
-Ferramentas de IA generativa foram utilizadas como apoio durante a fase de prototipação e exploração de layouts, acelerando a criação inicial de componentes e propostas visuais.
-
-Entretanto, a definição da estrutura do produto, arquitetura da solução, refinamentos de interface, ajustes de responsividade, organização do código, experiência do usuário e evolução técnica do projeto foram conduzidos manualmente ao longo do desenvolvimento.
-
-Este repositório representa a implementação prática dessas definições e continua evoluindo para incluir backend, banco de dados, integrações e infraestrutura em nuvem.
+```text
+Visitante
+    │
+    ▼
+Landing Page (React)
+    │
+    ▼
+API Go (Fiber)
+    │
+    ▼
+PostgreSQL (Neon)
+```
 
 ---
 
-## Executando o Projeto
+## Modelo Inicial de Dados
 
-### Instalação
+A primeira entidade do sistema é o Lead (Interessado):
+
+* ID
+* Nome
+* WhatsApp
+* Idade
+* Mensagem
+* Consentimento de Privacidade
+* Data de Criação
+
+---
+
+## Segurança e Privacidade
+
+O projeto adota as seguintes práticas:
+
+* HTTPS obrigatório
+* Credenciais protegidas por variáveis de ambiente
+* Banco de dados não exposto diretamente ao frontend
+* Preparado para CORS restrito
+* Preparado para Rate Limiting
+* Consentimento explícito para tratamento de dados
+* Terminologia adequada à LGPD e ao contexto terapêutico
+
+---
+
+## Executando o Frontend
 
 ```bash
 cd web
 
 npm install
-```
-
-### Ambiente de Desenvolvimento
-
-```bash
 npm run dev
 ```
 
@@ -161,15 +216,33 @@ http://localhost:8080
 
 ---
 
-## Objetivos Técnicos
+## Executando a API
 
-- Aplicar boas práticas de desenvolvimento frontend
-- Desenvolver uma API REST em Golang
-- Utilizar banco de dados PostgreSQL
-- Integrar serviços externos
-- Implementar deploy em nuvem
-- Consolidar conhecimentos em arquitetura de software
-- Evoluir o projeto para um ambiente de produção
+```bash
+cd api
+
+go run ./cmd/api
+```
+
+A API ficará disponível em:
+
+```text
+http://localhost:8080
+```
+
+### Endpoint de Verificação
+
+```http
+GET /health
+```
+
+Resposta esperada:
+
+```json
+{
+  "status": "ok"
+}
+```
 
 ---
 
@@ -177,38 +250,59 @@ http://localhost:8080
 
 ### Fase 1 — Frontend
 
-- [x] Estrutura inicial
-- [x] Landing Page
-- [x] Responsividade
-- [x] Componentização
-- [x] Refinamentos visuais
+* [x] Estrutura inicial
+* [x] Landing Page
+* [x] Responsividade
+* [x] Componentização
+* [x] Refinamentos visuais
 
 ### Fase 2 — Backend
 
-- [ ] Estrutura da API
-- [ ] Endpoint de inscrição
-- [ ] Validação dos dados
-- [ ] Persistência em banco
+* [x] Estrutura da API
+* [x] Configuração do Fiber
+* [x] Integração com PostgreSQL
+* [x] Configuração do GORM
+* [x] Endpoint de Health Check
+* [ ] Endpoint de inscrição
+* [ ] Validação dos dados
+* [ ] Persistência de Leads
 
 ### Fase 3 — Integrações
 
-- [ ] Google Sheets
-- [ ] Notificações por e-mail
-- [ ] Exportação de dados
+* [ ] Google Sheets
+* [ ] Notificações por e-mail
+* [ ] Integração com Resend
+* [ ] Exportação de dados
 
 ### Fase 4 — Infraestrutura
 
-- [ ] Deploy Frontend
-- [ ] Deploy Backend
-- [ ] Banco em nuvem
-- [ ] HTTPS
-- [ ] Monitoramento
+* [ ] Deploy Frontend (Cloudflare Pages)
+* [ ] Deploy Backend (Render)
+* [ ] Configuração de variáveis de ambiente em produção
+* [ ] HTTPS completo
+* [ ] Monitoramento
+
+---
+
+## Objetivos Técnicos
+
+Este projeto está sendo utilizado para consolidar conhecimentos em:
+
+* Desenvolvimento Backend com Go
+* APIs REST
+* PostgreSQL
+* GORM
+* Arquitetura de Software
+* Integrações com APIs externas
+* Computação em Nuvem
+* Segurança de Aplicações Web
+* Boas práticas de desenvolvimento
 
 ---
 
 ## Autor
 
-Alexander Leal Pastana
+**Alexander Leal Pastana**
 
 Estudante de Análise e Desenvolvimento de Sistemas.
 

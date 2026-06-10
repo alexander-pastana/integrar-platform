@@ -98,9 +98,8 @@ export function SignupModal({ open, onClose }: SignupModalProps) {
   return (
     <div
       aria-hidden={!open}
-      className={`fixed inset-0 z-50 transition-opacity duration-500 ${
-        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      }`}
+      className={`fixed inset-0 z-50 transition-opacity duration-500 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
     >
       <div
         className="absolute inset-0 bg-foreground/40 backdrop-blur-sm"
@@ -111,9 +110,8 @@ export function SignupModal({ open, onClose }: SignupModalProps) {
           role="dialog"
           aria-modal="true"
           aria-label="Inscrição no Integrar"
-          className={`relative w-full max-w-lg rounded-2xl bg-card shadow-2xl transition-all duration-500 ${
-            open ? "translate-y-0 scale-100 opacity-100" : "translate-y-4 scale-95 opacity-0"
-          }`}
+          className={`relative w-full max-w-lg rounded-2xl bg-card shadow-2xl transition-all duration-500 ${open ? "translate-y-0 scale-100 opacity-100" : "translate-y-4 scale-95 opacity-0"
+            }`}
         >
           <button
             onClick={onClose}
@@ -195,8 +193,7 @@ export function SignupModal({ open, onClose }: SignupModalProps) {
                     className="mt-1 h-4 w-4 rounded border-border accent-[var(--color-primary)]"
                   />
                   <span>
-                    Concordo que a equipe do Integrar entre em contato utilizando as informações
-                    fornecidas.
+                    Concordo com o tratamento dos meus dados para contato e informações relacionadas ao grupo Integrar.
                   </span>
                 </label>
                 {errors.consent && (
