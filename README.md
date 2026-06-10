@@ -248,7 +248,7 @@ Resposta esperada:
 
 ## Roadmap
 
-### Fase 1 — Frontend
+### Fase 1 - Frontend
 
 * [x] Estrutura inicial
 * [x] Landing Page
@@ -256,7 +256,7 @@ Resposta esperada:
 * [x] Componentização
 * [x] Refinamentos visuais
 
-### Fase 2 — Backend
+### Fase 2  Backend
 
 * [x] Estrutura da API
 * [x] Configuração do Fiber
@@ -267,14 +267,14 @@ Resposta esperada:
 * [ ] Validação dos dados
 * [ ] Persistência de Leads
 
-### Fase 3 — Integrações
+### Fase 3 - Integrações
 
 * [ ] Google Sheets
 * [ ] Notificações por e-mail
 * [ ] Integração com Resend
 * [ ] Exportação de dados
 
-### Fase 4 — Infraestrutura
+### Fase 4 - Infraestrutura
 
 * [ ] Deploy Frontend (Cloudflare Pages)
 * [ ] Deploy Backend (Render)
