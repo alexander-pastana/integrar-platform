@@ -117,7 +117,7 @@ integrar/
 
 ### api/
 
-Responsável pela API REST desenvolvida em Go.
+Responsável pela API desenvolvida em Go.
 
 Atualmente contém:
 
@@ -146,7 +146,7 @@ Documentação utilizada durante a fase de descoberta, planejamento, arquitetura
 
 ### Backend
 
-* API REST em Go
+* API em Go
 * Framework Fiber
 * GORM para acesso ao banco
 
@@ -289,7 +289,7 @@ Resposta esperada:
 Este projeto está sendo utilizado para consolidar conhecimentos em:
 
 * Desenvolvimento Backend com Go
-* APIs REST
+* APIs
 * PostgreSQL
 * GORM
 * Arquitetura de Software
