@@ -11,19 +11,19 @@ import (
 func main() {
 
 	cfg, err := config.Load()
-	if err != nil{
-		log.Fatal(err) 
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	db, err := database.Connect(cfg)
-	if err != nil{
-		log.Fatal(err) 
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	server := app.Setup(cfg, db)
 
-	if err := server.Listen(":" + cfg.Port); err != nil{
-		log.Fatal(err) 
+	if err := server.Listen(":" + cfg.Port); err != nil {
+		log.Fatal(err)
 	}
 
 }

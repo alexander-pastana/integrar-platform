@@ -1,0 +1,21 @@
+services:
+  postgres-test:
+    image: postgres:16-alpine
+
+    environment:
+      POSTGRES_USER: integrar_test
+      POSTGRES_PASSWORD: integrar_test
+      POSTGRES_DB: integrar_test
+
+    ports:
+      - "5433:5432"
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U integrar_test -d integrar_test
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+

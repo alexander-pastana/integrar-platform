@@ -1,42 +1,115 @@
+# =========================================================
+# Environment variables and secrets
+# =========================================================
+
+.env
+.env.*
+!.env.example
+
+# Cloudflare local environment variables
+web/.dev.vars
+web/.dev.vars.*
+!web/.dev.vars.example
+
+
+# =========================================================
 # Logs
+# =========================================================
+
 logs/
 *.log
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Frontend
+
+# =========================================================
+# Frontend — React / Vite / TanStack
+# =========================================================
+
 web/node_modules/
+
 web/dist/
 web/dist-ssr/
+
+web/.vite/
+web/.cache/
 web/.output/
 web/.vinxi/
 web/.tanstack/
 web/.nitro/
-web/*.local
-web/.env
-web/.env.local
 
-# Backend
-api/.env
+web/*.local
+web/*.tsbuildinfo
+web/.eslintcache
+
+
+# =========================================================
+# Cloudflare / Wrangler
+# =========================================================
+
+web/.wrangler/
+
+
+# =========================================================
+# Backend — Go
+# =========================================================
+
+api/bin/
+api/tmp/
+
 api/*.exe
 api/*.test
-api/coverage.out
+api/*.prof
+api/*.pprof
+api/__debug_bin*
 
-# Wrangler / Cloudflare
-web/.wrangler/
-web/.dev.vars
 
-# Editor directories and files
+# =========================================================
+# Test coverage
+# =========================================================
+
+coverage.out
+coverage.html
+coverage/
+*.coverprofile
+
+
+# =========================================================
+# Editors and IDEs
+# =========================================================
+
 .vscode/*
 !.vscode/extensions.json
+
 .idea/
-.DS_Store
-Thumbs.db
+
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.swp
+*.swo
+
+
+# =========================================================
+# Operating system files
+# =========================================================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+# =========================================================
+# Temporary files
+# =========================================================
+
+*.tmp
+*.temp
+*~
+~$*
+
