@@ -4,6 +4,8 @@ Plataforma web desenvolvida para o projeto **Integrar**, um grupo terapêutico v
 
 O objetivo da plataforma é apresentar a proposta do grupo, sua metodologia e seus facilitadores, além de permitir que pessoas interessadas realizem sua inscrição de forma simples, acolhedora e segura.
 
+Atualmente, o formulário de inscrição está totalmente integrado ao backend em Go, permitindo o armazenamento das inscrições em um banco PostgreSQL gerenciado pelo Neon.
+
 ---
 
 ## Sobre o Projeto
@@ -77,8 +79,6 @@ A plataforma foi criada para:
 * Integração com Google Sheets
 * Notificações por e-mail
 * Integração com serviço de envio de e-mails
-* Integração do formulário do frontend com a API
-* Configuração de CORS
 * Rate Limiting
 * Logs estruturados e níveis de log
 * Deploy em produção
@@ -104,6 +104,7 @@ A plataforma foi criada para:
 * GORM
 * PostgreSQL
 * go-playground/validator
+* CORS Middleware (Fiber)
 
 ### Testes e Infraestrutura
 
@@ -201,13 +202,22 @@ PostgreSQL
 Visitante
     │
     ▼
-Landing Page
+Landing Page (React)
     │
     ▼
-API Go com Fiber
+Formulário de Interesse
     │
     ▼
-PostgreSQL
+API REST (Go + Fiber)
+    │
+    ▼
+Service
+    │
+    ▼
+Repository
+    │
+    ▼
+PostgreSQL (Neon)
 ```
 
 As integrações com Google Sheets e envio de e-mails serão adicionadas ao fluxo nas próximas etapas.
@@ -239,13 +249,14 @@ Práticas atualmente adotadas:
 * banco de dados acessado somente pelo backend;
 * consentimento explícito para tratamento dos dados;
 * validação das requisições;
+* CORS configurado para o frontend durante o desenvolvimento;
 * respostas internas sem exposição direta de erros do banco;
 * execução do contêiner da API com usuário não root.
 
 Itens planejados para produção:
 
 * HTTPS;
-* CORS restrito;
+* CORS configurável por ambiente;
 * Rate Limiting;
 * logs estruturados;
 * monitoramento;
@@ -469,7 +480,7 @@ docker compose down -v
 
 ### Fase 4 - Segurança e Observabilidade
 
-* [ ] Configuração de CORS
+* [x] Configuração de CORS
 * [ ] Rate Limiting
 * [ ] Logs estruturados
 * [ ] Níveis de log
@@ -501,6 +512,7 @@ Este projeto está sendo utilizado para consolidar conhecimentos em:
 * computação em nuvem;
 * segurança de aplicações web;
 * boas práticas de desenvolvimento.
+* integração entre frontend React e backend Go;
 
 ---
 
