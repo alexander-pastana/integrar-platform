@@ -31,10 +31,27 @@ const initial: FormData = {
  * Payload: { name, whatsapp, age, message, consent, source: "landing" }
  */
 async function submitInterest(data: FormData): Promise<void> {
-  // Placeholder. Substituir pela chamada real ao backend Golang.
-  await new Promise((r) => setTimeout(r, 800));
-  // eslint-disable-next-line no-console
-  console.info("[Integrar] lead submission ready for API:", data);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const payload = {
+    name: data.name,
+    whatsapp: data.whatsapp,
+    age: Number(data.age),
+    message: data.message,
+    privacyConsent: data.consent,
+  };
+
+  const response = await fetch(`${apiUrl}/api/v1/leads`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to submit lead");
+  }
 }
 
 export function SignupModal({ open, onClose }: SignupModalProps) {
