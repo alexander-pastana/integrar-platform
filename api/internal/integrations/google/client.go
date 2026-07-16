@@ -2,8 +2,8 @@ package google
 
 import (
 	"context"
+	"os"
 
-	"github.com/alexander-pastana/integrar-platform/api/internal/config"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 )
@@ -13,14 +13,25 @@ type Client struct {
 	SheetID string
 }
 
-func New(cfg *config.Config) (*Client, error) {
-
+func New() (*Client, error) {
 	ctx := context.Background()
 
-	srv, err := sheets.NewService(
-		ctx,
-		option.WithCredentialsFile(cfg.GoogleServiceAccountPath),
+	var (
+		srv *sheets.Service
+		err error
 	)
+
+	if json := os.Getenv("GOOGLE_SERVICE_ACCOUNT_JSON"); json != "" {
+		srv, err = sheets.NewService(
+			ctx,
+			option.WithCredentialsJSON([]byte(json)),
+		)
+	} else {
+		srv, err = sheets.NewService(
+			ctx,
+			option.WithCredentialsFile(os.Getenv("GOOGLE_SERVICE_ACCOUNT_PATH")),
+		)
+	}
 
 	if err != nil {
 		return nil, err
@@ -28,6 +39,6 @@ func New(cfg *config.Config) (*Client, error) {
 
 	return &Client{
 		Service: srv,
-		SheetID: cfg.GoogleSheetsID,
+		SheetID: os.Getenv("GOOGLE_SHEETS_ID"),
 	}, nil
 }
