@@ -9,33 +9,53 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// Config centraliza as variáveis de ambiente da aplicação.
 type Config struct {
-	Port        string
+	Port string
+
 	DatabaseURL string
+
+	GoogleSheetsID          string
+	GoogleServiceAccountPath string
+
+	ResendAPIKey    string
+	ResendFrom      string
+	NotificationEmail string
+
+	FrontendURL string
 }
 
-// Load carrega as configurações do arquivo .env ou do sistema.
-// Retorna um ponteiro (*Config) seguindo o padrão idiomático para structs de configuração.
 func Load() (*Config, error) {
-	// O erro do godotenv pode ser ignorado em ambientes de produção (Render/GCP)
+
 	if err := godotenv.Load(); err != nil {
 		log.Println(".env file not found, using system environment variables")
 	}
 
-	port := strings.TrimSpace(os.Getenv("PORT"))
-	if port == "" {
-		port = "8080"
+	cfg := &Config{
+		Port:                     getEnv("PORT", "8080"),
+		DatabaseURL:              requiredEnv("DATABASE_URL"),
+		GoogleSheetsID:           requiredEnv("GOOGLE_SHEETS_ID"),
+		GoogleServiceAccountPath: requiredEnv("GOOGLE_SERVICE_ACCOUNT_PATH"),
+		ResendAPIKey:             requiredEnv("RESEND_API_KEY"),
+		ResendFrom:               getEnv("RESEND_FROM", "Integrar <onboarding@resend.dev>"),
+		NotificationEmail:        requiredEnv("NOTIFICATION_EMAIL"),
+		FrontendURL:              getEnv("FRONTEND_URL", "http://localhost:5173"),
 	}
 
-	databaseURL := strings.TrimSpace(os.Getenv("DATABASE_URL"))
-	if databaseURL == "" {
-		// Convenção do Go: mensagens de erro em letras minúsculas e sem ponto final
+	if cfg.DatabaseURL == "" {
 		return nil, errors.New("database_url is required")
 	}
 
-	return &Config{
-		Port:        port,
-		DatabaseURL: databaseURL,
-	}, nil
+	return cfg, nil
+}
+
+func getEnv(key, fallback string) string {
+	value := strings.TrimSpace(os.Getenv(key))
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
+func requiredEnv(key string) string {
+	return strings.TrimSpace(os.Getenv(key))
 }

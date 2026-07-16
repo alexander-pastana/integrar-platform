@@ -1,6 +1,7 @@
 package leads_test
 
 import (
+	"context"
 	"errors"
 	"strings"
 	"testing"
@@ -13,6 +14,12 @@ type fakeRepository struct {
 	createError  error
 }
 
+type fakeIntegration struct{}
+
+func (f *fakeIntegration) SyncLead(ctx context.Context, lead *leads.Lead) error {
+	return nil
+}
+
 func (r *fakeRepository) Create(lead *leads.Lead) error {
 	r.createCalled = true
 	return r.createError
@@ -20,7 +27,10 @@ func (r *fakeRepository) Create(lead *leads.Lead) error {
 
 func TestCreateLeadWithoutPrivacyConsent(t *testing.T) {
 	repo := &fakeRepository{}
-	service := leads.NewService(repo)
+	service := leads.NewService(
+		repo,
+		&fakeIntegration{},
+	)
 
 	lead := &leads.Lead{
 		PrivacyConsent: false,
@@ -40,7 +50,10 @@ func TestCreateLeadWithoutPrivacyConsent(t *testing.T) {
 
 func TestCreateLeadWithPrivacyConsent(t *testing.T) {
 	repo := &fakeRepository{}
-	service := leads.NewService(repo)
+	service := leads.NewService(
+		repo,
+		&fakeIntegration{},
+	)
 
 	lead := &leads.Lead{
 		PrivacyConsent: true,
@@ -64,7 +77,10 @@ func TestCreateLeadWhenRepositoryFails(t *testing.T) {
 		createError: repositoryError,
 	}
 
-	service := leads.NewService(repo)
+	service := leads.NewService(
+		repo,
+		&fakeIntegration{},
+	)
 
 	lead := &leads.Lead{
 		PrivacyConsent: true,

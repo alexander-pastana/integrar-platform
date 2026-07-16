@@ -1,6 +1,7 @@
 package leads
 
 import (
+	"context"
 	"errors"
 	"fmt"
 )
@@ -10,14 +11,20 @@ type LeadService interface {
 }
 
 type Service struct {
-	repository LeadRepository
+	repository   LeadRepository
+	integrations []LeadIntegration
 }
 
 var ErrPrivacyConsentRequired = errors.New("privacy consent is required")
 
-func NewService(repo LeadRepository) *Service {
+func NewService(
+	repo LeadRepository,
+	integrations ...LeadIntegration,
+) *Service {
+
 	return &Service{
-		repository: repo,
+		repository:   repo,
+		integrations: integrations,
 	}
 }
 
@@ -29,6 +36,17 @@ func (s *Service) CreateLead(lead *Lead) error {
 
 	if err := s.repository.Create(lead); err != nil {
 		return fmt.Errorf("save lead: %w", err)
+	}
+
+	for _, integration := range s.integrations {
+
+		if integration == nil {
+			continue
+		}
+
+		if err := integration.SyncLead(context.Background(), lead); err != nil {
+			fmt.Printf("integration failed: %v\n", err)
+		}
 	}
 
 	return nil
