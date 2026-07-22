@@ -6,6 +6,8 @@
 .env.*
 !.env.example
 
+credentials/
+
 # Cloudflare local environment variables
 web/.dev.vars
 web/.dev.vars.*
