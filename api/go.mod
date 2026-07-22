@@ -1,6 +1,6 @@
 module github.com/alexander-pastana/integrar-platform/api
 
-go 1.25.6
+go 1.25.0
 
 require (
 	github.com/go-playground/validator/v10 v10.30.3
@@ -52,7 +52,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/resend/resend-go/v2 v2.28.0
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
