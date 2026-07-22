@@ -6,8 +6,10 @@ import (
 )
 
 type Client struct {
-	Client            *resend.Client
-	From              string
+	Client *resend.Client
+
+	From string
+
 	NotificationEmail string
 }
 

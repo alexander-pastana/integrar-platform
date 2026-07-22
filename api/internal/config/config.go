@@ -10,18 +10,18 @@ import (
 )
 
 type Config struct {
-	Port string
-
+	Port        string
 	DatabaseURL string
 
+	FrontendURL string
+
 	GoogleSheetsID          string
+	GoogleServiceAccountJSON string
 	GoogleServiceAccountPath string
 
 	ResendAPIKey    string
 	ResendFrom      string
 	NotificationEmail string
-
-	FrontendURL string
 }
 
 func Load() (*Config, error) {
@@ -31,14 +31,18 @@ func Load() (*Config, error) {
 	}
 
 	cfg := &Config{
-		Port:                     getEnv("PORT", "8080"),
-		DatabaseURL:              requiredEnv("DATABASE_URL"),
-		GoogleSheetsID:           requiredEnv("GOOGLE_SHEETS_ID"),
-		GoogleServiceAccountPath: requiredEnv("GOOGLE_SERVICE_ACCOUNT_PATH"),
-		ResendAPIKey:             requiredEnv("RESEND_API_KEY"),
-		ResendFrom:               getEnv("RESEND_FROM", "Integrar <onboarding@resend.dev>"),
-		NotificationEmail:        requiredEnv("NOTIFICATION_EMAIL"),
-		FrontendURL:              getEnv("FRONTEND_URL", "http://localhost:5173"),
+		Port:        getEnv("PORT", "8080"),
+		DatabaseURL: strings.TrimSpace(os.Getenv("DATABASE_URL")),
+
+		FrontendURL: getEnv("FRONTEND_URL", "http://localhost:5173"),
+
+		GoogleSheetsID:           strings.TrimSpace(os.Getenv("GOOGLE_SHEETS_ID")),
+		GoogleServiceAccountJSON: strings.TrimSpace(os.Getenv("GOOGLE_SERVICE_ACCOUNT_JSON")),
+		GoogleServiceAccountPath: strings.TrimSpace(os.Getenv("GOOGLE_SERVICE_ACCOUNT_PATH")),
+
+		ResendAPIKey:     strings.TrimSpace(os.Getenv("RESEND_API_KEY")),
+		ResendFrom:       strings.TrimSpace(os.Getenv("RESEND_FROM")),
+		NotificationEmail: strings.TrimSpace(os.Getenv("NOTIFICATION_EMAIL")),
 	}
 
 	if cfg.DatabaseURL == "" {
@@ -49,13 +53,9 @@ func Load() (*Config, error) {
 }
 
 func getEnv(key, fallback string) string {
-	value := strings.TrimSpace(os.Getenv(key))
-	if value == "" {
+	v := strings.TrimSpace(os.Getenv(key))
+	if v == "" {
 		return fallback
 	}
-	return value
-}
-
-func requiredEnv(key string) string {
-	return strings.TrimSpace(os.Getenv(key))
+	return v
 }

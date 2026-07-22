@@ -16,9 +16,9 @@ func Setup(cfg *config.Config, db *gorm.DB) *fiber.App {
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173",
-		AllowMethods: "POST,GET",
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowOrigins: cfg.FrontendURL,
+		AllowMethods: "GET,POST,OPTIONS",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 
 	googleClient, err := google.New(cfg)
